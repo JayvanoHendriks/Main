@@ -5,10 +5,15 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 const drawerOpen = ref(false)
 const installPrompt = ref(null)
-const showInstallBanner = ref(false)
+const showInstallSnackbar = ref(false)
+let installSnackbarTimer = null
 
 const pageTitle = computed(() => {
   return route.name === 'favorieten' ? 'Favorieten' : 'Home'
+})
+
+const showSearchButton = computed(() => {
+  return route.name === 'overzicht'
 })
 
 function openenSide() {
@@ -29,7 +34,7 @@ function onBeforeInstallPrompt(event) {
 
   window.setTimeout(() => {
     if (installPrompt.value) {
-      showInstallBanner.value = true
+      openInstallSnackbar()
     }
   }, 2000)
 }
@@ -37,14 +42,24 @@ function onBeforeInstallPrompt(event) {
 async function installApp() {
   if (!installPrompt.value) return
 
-  showInstallBanner.value = false
+  closeInstallSnackbar()
   installPrompt.value.prompt()
   await installPrompt.value.userChoice
   installPrompt.value = null
 }
 
-function closeInstallBanner() {
-  showInstallBanner.value = false
+function openInstallSnackbar() {
+  window.clearTimeout(installSnackbarTimer)
+  showInstallSnackbar.value = true
+
+  installSnackbarTimer = window.setTimeout(() => {
+    showInstallSnackbar.value = false
+  }, 5000)
+}
+
+function closeInstallSnackbar() {
+  window.clearTimeout(installSnackbarTimer)
+  showInstallSnackbar.value = false
 }
 
 onMounted(() => {
@@ -53,17 +68,34 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   window.removeEventListener('beforeinstallprompt', onBeforeInstallPrompt)
+  window.clearTimeout(installSnackbarTimer)
 })
 </script>
 
 <template>
-  <div class="install-banner" :class="{ show: showInstallBanner }" role="dialog" aria-live="polite">
-    <div class="install-banner__text">Wil je deze app installeren?</div>
-    <div class="install-banner__actions">
-      <button class="install-btn" type="button" @click="installApp">Installeren</button>
-      <button class="install-close" type="button" aria-label="Sluiten" @click="closeInstallBanner">
-        Sluit
-      </button>
+  <div
+    class="mdc-snackbar mdc-snackbar--leading install-snackbar"
+    :class="{ 'mdc-snackbar--open': showInstallSnackbar }"
+  >
+    <div class="mdc-snackbar__surface" role="status" aria-relevant="additions">
+      <div class="mdc-snackbar__label" aria-atomic="false">
+        Pokédex downloaden naar je apparaat?
+      </div>
+      <div class="mdc-snackbar__actions" aria-atomic="true">
+        <button class="mdc-button mdc-snackbar__action" type="button" @click="installApp">
+          <span class="mdc-button__ripple"></span>
+          <span class="mdc-button__label">Download</span>
+        </button>
+        <button
+          class="material-icons mdc-icon-button mdc-snackbar__dismiss"
+          type="button"
+          title="Sluiten"
+          aria-label="Sluiten"
+          @click="closeInstallSnackbar"
+        >
+          close
+        </button>
+      </div>
     </div>
   </div>
 
@@ -112,7 +144,8 @@ onBeforeUnmount(() => {
           favorite
         </RouterLink>
         <button
-          class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
+          v-if="showSearchButton"
+          class="material-icons mdc-top-app-bar__action-item mdc-icon-button app-search-button"
           type="button"
           aria-label="Search"
           @click="toggleSearch"

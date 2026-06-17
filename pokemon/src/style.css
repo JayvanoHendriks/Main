@@ -159,6 +159,10 @@ input {
   display: none;
 }
 
+body.no-scroll .app-search-button {
+  display: none;
+}
+
 .search-strip {
   display: flex;
   align-items: center;
@@ -460,53 +464,22 @@ input {
   font-size: 13px;
 }
 
-.install-banner {
-  position: fixed;
-  left: 16px;
-  right: 16px;
-  bottom: 16px;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
-  padding: 12px 14px;
-  display: none;
-  align-items: center;
-  gap: 12px;
+.install-snackbar {
   z-index: 1200;
 }
 
-.install-banner.show {
-  display: flex;
+.install-snackbar .mdc-snackbar__surface {
+  background-color: #333333;
 }
 
-.install-banner__text {
-  font-size: 14px;
-  color: #333333;
-  flex: 1;
-}
-
-.install-banner__actions {
-  display: flex;
-  gap: 8px;
-}
-
-.install-btn {
-  border: 0;
-  padding: 8px 12px;
-  border-radius: 8px;
-  background: var(--mdc-theme-primary);
+.install-snackbar .mdc-snackbar__action {
   color: #ffffff;
-  cursor: pointer;
-  font-weight: 600;
 }
 
-.install-close {
-  border: 1px solid #cccccc;
-  padding: 8px 10px;
-  border-radius: 8px;
-  background: #ffffff;
-  color: #333333;
-  cursor: pointer;
+.app-button {
+  --mdc-theme-primary: #5e2129;
+  border-radius: 4px;
+  text-transform: uppercase;
 }
 
 @media (min-width: 760px) {

@@ -128,8 +128,26 @@ function closeDetails() {
   </section>
 
   <nav class="page-buttons" aria-label="Paginatie">
-    <button class="install-close" type="button" :disabled="page === 1" @click="previousPage">Vorige</button>
-    <button class="install-btn" type="button" :disabled="page === totalPages" @click="nextPage">Volgende</button>
+    <button
+      class="mdc-button mdc-button--outlined app-button"
+      type="button"
+      :disabled="page === 1"
+      @click="previousPage"
+    >
+      <span class="mdc-button__ripple"></span>
+      <span class="mdc-button__focus-ring"></span>
+      <span class="mdc-button__label">Vorige</span>
+    </button>
+    <button
+      class="mdc-button mdc-button--raised app-button"
+      type="button"
+      :disabled="page === totalPages"
+      @click="nextPage"
+    >
+      <span class="mdc-button__ripple"></span>
+      <span class="mdc-button__focus-ring"></span>
+      <span class="mdc-button__label">Volgende</span>
+    </button>
   </nav>
 
   <PokemonDetailSheet
