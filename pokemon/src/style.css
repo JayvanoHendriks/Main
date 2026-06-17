@@ -159,6 +159,10 @@ input {
   display: none;
 }
 
+body.no-scroll .app-search-button {
+  display: none;
+}
+
 .search-strip {
   display: flex;
   align-items: center;

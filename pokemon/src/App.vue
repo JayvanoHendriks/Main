@@ -11,6 +11,10 @@ const pageTitle = computed(() => {
   return route.name === 'favorieten' ? 'Favorieten' : 'Home'
 })
 
+const showSearchButton = computed(() => {
+  return route.name === 'overzicht'
+})
+
 function openenSide() {
   drawerOpen.value = true
 }
@@ -112,7 +116,8 @@ onBeforeUnmount(() => {
           favorite
         </RouterLink>
         <button
-          class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
+          v-if="showSearchButton"
+          class="material-icons mdc-top-app-bar__action-item mdc-icon-button app-search-button"
           type="button"
           aria-label="Search"
           @click="toggleSearch"
