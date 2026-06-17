@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192" role="img" aria-label="Pokedex">
+  <rect width="192" height="192" rx="42" fill="#1b5e20"/>
+  <circle cx="96" cy="96" r="58" fill="#ffffff"/>
+  <path d="M38 96h116" stroke="#1b5e20" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="96" cy="96" r="20" fill="#1b5e20"/>
+  <circle cx="96" cy="96" r="9" fill="#ffffff"/>
+</svg>
