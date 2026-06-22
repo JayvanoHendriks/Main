@@ -1,8 +1,6 @@
 const API_BASE_URL = 'https://pokeapi.co/api/v2'
 const SPRITE_BASE_URL = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon'
 
-let allPokemonCache = null
-
 export function getPokemonIdFromUrl(url) {
   if (!url) return null
 
@@ -21,8 +19,6 @@ export function getPokemonGif(id) {
 }
 
 export async function getAllPokemon() {
-  if (allPokemonCache) return allPokemonCache
-
   const response = await fetch(`${API_BASE_URL}/pokemon?limit=1302`)
 
   if (!response.ok) {
@@ -31,12 +27,10 @@ export async function getAllPokemon() {
 
   const data = await response.json()
 
-  allPokemonCache = data.results.map((pokemon) => ({
+  return data.results.map((pokemon) => ({
     ...pokemon,
     id: getPokemonIdFromUrl(pokemon.url),
   }))
-
-  return allPokemonCache
 }
 
 export async function getPokemonDetails(nameOrId) {

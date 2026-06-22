@@ -2,8 +2,14 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Overzicht from '../views/Overzicht.vue'
 import Favorieten from '../views/Favorieten.vue'
 
-const routes = [
-  {
+
+
+
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes: [
+      {
     path: '/',
     name: 'overzicht',
     component: Overzicht,
@@ -12,12 +18,8 @@ const routes = [
     path: '/favorieten',
     name: 'favorieten',
     component: Favorieten,
-  },
-]
-
-const router = createRouter({
-  history: createWebHistory(),
-  routes,
+  }
+  ],
 })
 
 export default router
