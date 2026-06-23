@@ -2,16 +2,7 @@
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { getPokemonDetails, getPokemonGif, getPokemonSprite } from '../services/pokeApi'
 
-const props = defineProps({
-  pokemon: {
-    type: Object,
-    default: null,
-  },
-  isFavorite: {
-    type: Boolean,
-    default: false,
-  },
-})
+const props = defineProps(['pokemon', 'isFavorite'])
 
 const emit = defineEmits(['close', 'toggle-favorite'])
 
@@ -25,10 +16,7 @@ const imageUrl = computed(() => {
   if (!displayPokemon.value?.id) return ''
   return getPokemonGif(displayPokemon.value.id)
 })
-const fallbackImageUrl = computed(() => {
-  if (!displayPokemon.value?.id) return ''
-  return getPokemonSprite(displayPokemon.value.id)
-})
+
 
 watch(
   () => props.pokemon,
@@ -78,10 +66,7 @@ function statName(name) {
   return names[name] || name
 }
 
-function useFallbackImage(event) {
-  event.target.onerror = null
-  event.target.src = fallbackImageUrl.value
-}
+
 
 </script>
 
@@ -119,7 +104,7 @@ function useFallbackImage(event) {
 
       <article v-else-if="details" class="pokemon-details-panel">
         <div class="sheet-image-frame">
-          <img class="sheet-image" :src="imageUrl" :alt="details.name" @error="useFallbackImage">
+          <img class="sheet-image" :src="imageUrl" :alt="details.name">
         </div>
 
         <section class="detail-info">

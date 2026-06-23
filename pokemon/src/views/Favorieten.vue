@@ -6,7 +6,7 @@
   import { useFavorites } from '../composables/useFavorites'
 
   const selectedPokemon = ref(null)
-  const { favorites, removeFavorite, toggleFavorite, isFavorite } = useFavorites()
+  const { toggleFavorite, isFavorite } = useFavorites()
 
   const sortedFavorites = computed(() => {
     return [...favorites.value].sort((a, b) => a.id - b.id)

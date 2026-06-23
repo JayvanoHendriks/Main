@@ -25,10 +25,6 @@ const filteredPokemon = computed(() => {
   return allPokemon.value.filter((pokemon) => pokemon.name.includes(search))
 })
 
-const totalPages = computed(() => {
-  return Math.max(1, Math.ceil(filteredPokemon.value.length / pageSize))
-})
-
 const visiblePokemon = computed(() => {
   const start = (page.value - 1) * pageSize
   return filteredPokemon.value.slice(start, start + pageSize)
@@ -36,12 +32,6 @@ const visiblePokemon = computed(() => {
 
 watch(searchTerm, () => {
   page.value = 1
-})
-
-watch(totalPages, () => {
-  if (page.value > totalPages.value) {
-    page.value = totalPages.value
-  }
 })
 
 async function toggleSearchField() {
@@ -78,7 +68,7 @@ function previousPage() {
 }
 
 function nextPage() {
-  if (page.value < totalPages.value) {
+  if (page.value * pageSize < filteredPokemon.value.length) {
     page.value++
   }
 }
@@ -141,7 +131,7 @@ function closeDetails() {
     <button
       class="mdc-button mdc-button--raised app-button"
       type="button"
-      :disabled="page === totalPages"
+      :disabled="page * pageSize >= filteredPokemon.length"
       @click="nextPage"
     >
       <span class="mdc-button__ripple"></span>

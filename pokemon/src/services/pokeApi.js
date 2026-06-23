@@ -2,12 +2,7 @@ const API_BASE_URL = 'https://pokeapi.co/api/v2'
 const SPRITE_BASE_URL = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon'
 
 export function getPokemonIdFromUrl(url) {
-  if (!url) return null
-
-  const parts = url.split('/').filter(Boolean)
-  const id = Number(parts[parts.length - 1])
-
-  return Number.isNaN(id) ? null : id
+  return url.split('/')[6]
 }
 
 export function getPokemonSprite(id) {
@@ -27,10 +22,7 @@ export async function getAllPokemon() {
 
   const data = await response.json()
 
-  return data.results.map((pokemon) => ({
-    ...pokemon,
-    id: getPokemonIdFromUrl(pokemon.url),
-  }))
+  return data.results
 }
 
 export async function getPokemonDetails(nameOrId) {
